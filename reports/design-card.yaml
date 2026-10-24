@@ -1,0 +1,43 @@
+item_id: qsc-006
+expert_route: MA-08
+business_event: 灾害响应中心在夜间将整批应急物资分配到早晚波次并生成车辆路径计划。
+data_provenance: 合成图数据；节点、走廊、订单与预算由固定夹具和确定性随机种子生成，不代表真实运营记录。
+challenges:
+- id: axis-1
+  reasoning_failure: 有向简单路径的旅行时长和风险暴露双约束。
+  observable_symptom: 错误路径会违反到达时限或风险上限，导致不可执行调度。
+  test_ids:
+  - test_sla_boundary_selects_a_feasible_route_and_rejects_late_only_service
+  - test_exposure_boundary_selects_a_feasible_route
+  independent_validation: 独立逐边累加与穷举基线。
+- id: axis-2
+  reasoning_failure: 整单不可拆分、波次分离容量和能源预算。
+  observable_symptom: 把订单拆分或混用波次会产生超载或能源超限计划。
+  test_ids:
+  - test_whole_order_cannot_be_split_across_individually_insufficient_paths
+  - test_dispatch_waves_have_separate_capacity_and_one_shift_opening_fee
+  - test_wave_energy_is_bounded_per_wave_and_shared_by_orders
+  independent_validation: 独立资源账本和容量不变量检查。
+- id: axis-3
+  reasoning_failure: 优先级词典序、启用固定费和路径稳定排序。
+  observable_symptom: 局部最便宜路径可能破坏全局接收数或重放确定性。
+  test_ids:
+  - test_hand_computed_dispatch_respects_priority_and_open_fee_gate
+  - test_opening_fee_can_overrule_individually_cheapest_lanes
+  - test_tie_break_uses_lane_ids_not_input_lane_order
+  independent_validation: 手算小例和输入排列不变性对照。
+requirements:
+- PRI-01
+- CAP-02
+- SLA-07
+- WAVE-08
+- FIX-03
+- TIE-04
+- THERM-09
+- COOL-10
+- VALID-05
+originality_checks:
+  public: 公开题面为原创应急响应分拨事件
+  prior: 未复用已有题面的业务叙事、夹具或输出字段组合
+  internal: 仅借鉴通用图算法验证模式，参考解和测试重新组织
+expected_result_rationale: 领域审查依据：整单路径选择必须同时满足有向简单路径、时长/风险、波次容量和能源预算；固定费与优先级形成可独立核验的全局词典序。

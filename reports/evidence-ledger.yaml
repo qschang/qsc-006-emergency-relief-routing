@@ -1,0 +1,42 @@
+revision: candidate-qsc-006
+ledger:
+- rule: domain-grounding
+  evidence: reports/design-card.yaml; MA-08 retrieved leaf and fixed synthetic fixtures
+  status: PASS
+- rule: behavior-tests
+  evidence: tests/test_contract.py; 21 test_* functions; direct assertions
+  status: PASS
+- rule: atomic-rejection
+  evidence: duplicate, boolean, fractional, late-invalid, and replace-failure tests
+  status: PASS
+- rule: deterministic
+  evidence: test_identical_input_produces_identical_plan and permutation test
+  status: PASS
+- rule: runtime
+  evidence: pending frozen POSIX Harbor execution
+  status: REVIEW
+claims:
+- claim: MA-08 domain mapping
+  evidence: design-card.yaml and instruction.md
+  status: PASS
+  id: CLM-01
+  sources:
+  - design-card.yaml and instruction.md
+  applicability: 适用于本题包的发布与行为规则
+  independent_check: 由独立测试或结构化证据复核
+- claim: 21 behavior tests
+  evidence: tests/test_contract.py
+  status: PASS
+  id: CLM-02
+  sources:
+  - tests/test_contract.py
+  applicability: 适用于本题包的发布与行为规则
+  independent_check: 由独立测试或结构化证据复核
+- claim: atomic side effects
+  evidence: replace-failure and rejection tests
+  status: PASS
+  id: CLM-03
+  sources:
+  - replace-failure and rejection tests
+  applicability: 适用于本题包的发布与行为规则
+  independent_check: 由独立测试或结构化证据复核

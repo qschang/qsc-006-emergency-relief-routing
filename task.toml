@@ -1,0 +1,27 @@
+schema_version = "1.3"
+
+[task]
+name = "qsc/emergency-relief-shift-routing"
+description = "Plan a lexicographically prioritized whole-consignment emergency-relief routing schedule across two dispatch waves with corridor capacities, travel and risk limits, energy budgets, and shift-wide activation fees."
+authors = [{ name = "QSC" }]
+keywords = ["network-optimization", "integer-programming", "priority-dispatch", "fixed-charge", "emergency-relief", "resource-budget"]
+
+[agent]
+timeout_sec = 3600
+
+[environment]
+build_timeout_sec = 900
+cpus = 1
+memory_mb = 2048
+storage_mb = 4096
+gpus = 0
+allow_internet = true
+
+[verifier]
+timeout_sec = 300
+
+[metadata]
+difficulty = "expert"
+category = "H.1 Mathematics"
+tags = ["discrete-graph", "unsplittable-orders", "shared-capacity", "fixed-charge", "risk-exposure", "wave-energy-budget"]
+expert_time_estimate = "14h"
